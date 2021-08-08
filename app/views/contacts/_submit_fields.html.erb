@@ -8,7 +8,7 @@
 </div>
 <div>
   <%= form.label :phonenumber %> (必須)
-  <%= form.telephone_field :phonenumber, required: true, pattern: "[0-9]" %>
+  <%= form.number_field :phonenumber, required: true, pattern: "/\A\d{10,11}\z/" %>
 </div>
 <div>
   <%= form.label :message %> (必須)
