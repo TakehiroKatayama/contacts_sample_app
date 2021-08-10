@@ -1,5 +1,4 @@
 class ContactMailer < ApplicationMailer
-  ADMIN_EMAIL = 'admin@example.com'
 
   def user_email(contact)
     @contact = contact
@@ -19,6 +18,6 @@ class ContactMailer < ApplicationMailer
     @name = contact.name.present? ? contact.name : contact.email
     subject = '【アプリ名】お問い合わせがありました'
 
-    mail(to: ADMIN_EMAIL, subject: subject)
+    mail(to:ENV['ADMIN_EMAIL'], subject: subject)
   end
 end

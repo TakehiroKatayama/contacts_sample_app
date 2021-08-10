@@ -6,7 +6,6 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
 
-    # respond_to do |_format|
     if @contact.save
       # ユーザーにメールを送信
       ContactMailer.user_email(@contact).deliver_now
@@ -14,22 +13,17 @@ class ContactsController < ApplicationController
       ContactMailer.admin_email(@contact).deliver_now
       # slackに通知を送る
       notify_to_slack(@contact)
-      # format.html { redirect_to root_path, notice: 'Contact was successfully created.' }
-      # format.json { render :index, status: :created, location: @contact }
       redirect_to root_path
     else
-      # format.html { render :index, status: :unprocessable_entity }
-      # format.json { render json: @contact.errors, status: :unprocessable_entity }
       render :index
     end
-    # end
   end
 
   def notify_to_slack(contact)
     message = <<~EOS
       新しいお問い合わせがありました！
       ```
-      name: #{contact.name}
+      name: #{contact.name}様
       email: #{contact.email}
       phonenumber: #{contact.phonenumber}
       message: #{contact.message}
